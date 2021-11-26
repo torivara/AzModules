@@ -8,7 +8,7 @@
 
 This action automates the validation, deployment and removal of resources in Azure using [idempotent](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning)
 [Infrastructure as Code (IaC)](https://en.wikipedia.org/wiki/Infrastructure_as_code) modules.
-You can use the built-in module library that comes with this action or create and use your own module repo.
+You can use the built-in module library that comes with this action or create and use your own module repository.
 
 Supported IaC languages:
 
@@ -47,8 +47,8 @@ These contributions would not make sense to contribute to [azure/arm-deploy](htt
 
 ## Module library
 
-By default the AzModules action uses the built in module repository. This can be overridden by using the `ModulesPath` input.
-The folder this is pointing to should be structured like the [`Modules`](https://github.com/equinor/AzModules/tree/main/Modules) folder in this repo.
+By default the AzModules action uses the built-in module repository. This can be overridden by using the `ModulesPath` input.
+The folder this is pointing to should be structured like the [`Modules`](https://github.com/equinor/AzModules/tree/main/Modules) folder in this repository.
 
 | Module name (link to readme)                                                                                                 | IaC Language | Status                                                                                                                                                                                                                                       |
 | :--------------------------------------------------------------------------------------------------------------------------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -109,7 +109,7 @@ N/A
 
 ## Usage
 
-### Using the built in modules
+### Using the built-in modules
 
 ```yml
 name: Test-Workflow
