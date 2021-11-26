@@ -1,0 +1,139 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "sxx-wd-aut-x-001"
+        },
+        "schedules": {
+            "value": [
+                {
+                    "name": "TestSchedule",
+                    "startTime": "",
+                    "expiryTime": "9999-12-31T23:59:00+00:00",
+                    "interval": 15,
+                    "frequency": "Minute",
+                    "timeZone": "Europe/Berlin",
+                    "advancedSchedule": {}
+                }
+            ]
+        },
+        "modules": {
+            "value": [
+                {
+                    "name": "PSWindowsUpdate",
+                    "version": "latest",
+                    "uri": "https://www.powershellgallery.com/api/v2/package"
+                }
+            ]
+        },
+        "runbooks": {
+            "value": [
+                {
+                    "name": "TestRunbook",
+                    "runbookType": "PowerShell",
+                    "description": "Test runbook",
+                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.automation/101-automation/scripts/AzureAutomationTutorial.ps1",
+                    "version": "1.0.0.0"
+                }
+            ]
+        },
+        "jobSchedules": {
+            "value": [
+                {
+                    "scheduleName": "TestSchedule",
+                    "runbookName": "TestRunbook"
+                }
+            ]
+        },
+        // "linkedWorkspaceId": {
+        //     "value": "/subscriptions/<<subscriptionId>>/resourcegroups/test-rg/providers/Microsoft.OperationalInsights/workspaces/test-law"
+        // },
+        // "gallerySolutions": {
+        //     "value": [
+        //         "Updates"
+        //     ]
+        // },
+        // "softwareUpdateConfigurations": {
+        //     "value": [
+        //         {
+        //             "name": "Windows_ZeroDay",
+        //             "frequency": "Month",
+        //             "operatingSystem": "Windows",
+        //             "rebootSetting": "IfRequired",
+        //             "scopeByTags": {
+        //                 "Update": [
+        //                     "Automatic-Wave1"
+        //                 ]
+        //             },
+        //             "maintenanceWindow": "PT4H",
+        //             "updateClassifications": [
+        //                 "Critical",
+        //                 "Security",
+        //                 "UpdateRollup",
+        //                 "FeaturePack",
+        //                 "ServicePack",
+        //                 "Definition",
+        //                 "Tools",
+        //                 "Updates"
+        //             ],
+        //             "includeUpdates": [
+        //                 "654321"
+        //             ],
+        //             "excludeUpdates": [
+        //                 "123456"
+        //             ],
+        //             "interval": 1,
+        //             "monthlyOccurrences": [
+        //                 {
+        //                     "occurrence": 3,
+        //                     "day": "Friday"
+        //                 }
+        //             ],
+        //             "startTime": "22:00"
+        //         },
+        //         {
+        //             "name": "Linux_ZeroDay",
+        //             "frequency": "OneTime",
+        //             "operatingSystem": "Linux",
+        //             "rebootSetting": "IfRequired",
+        //             "maintenanceWindow": "PT4H",
+        //             "updateClassifications": [
+        //                 "Critical",
+        //                 "Security",
+        //                 "Other"
+        //             ],
+        //             "includeUpdates": [
+        //                 "kernel"
+        //             ],
+        //             "excludeUpdates": [
+        //                 "icacls"
+        //             ],
+        //             "startTime": "2021-12-31T06:00"
+        //         }
+        //     ]
+        // },
+        // "privateEndpoints": {
+        //     "value": [
+        //         {
+        //             "subnetResourceId": "/subscriptions/<<subscriptionId>>/resourceGroups/validation-rg/providers/Microsoft.Network/virtualNetworks/adp-sxx-az-vnet-x-001/subnets/sxx-az-subnet-x-005-privateEndpoints",
+        //             "service": "Webhook"
+        //         },
+        //         {
+        //             "subnetResourceId": "/subscriptions/<<subscriptionId>>/resourceGroups/validation-rg/providers/Microsoft.Network/virtualNetworks/adp-sxx-az-vnet-x-001/subnets/sxx-az-subnet-x-005-privateEndpoints",
+        //             "service": "DSCAndHybridWorker"
+        //         }
+        //     ]
+        // },
+        "roleAssignments": {
+            "value": [
+                {
+                    "roleDefinitionIdOrName": "Reader",
+                    "principalIds": [
+                        "<<deploymentSpId>>"
+                    ]
+                }
+            ]
+        }
+    }
+}
