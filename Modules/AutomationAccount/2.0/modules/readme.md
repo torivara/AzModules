@@ -17,7 +17,7 @@ This module deploys an Azure Automation Account Module.
 | `location`              | string | `[resourceGroup().location]` |                 | Optional. Location for all resources.                                                    |
 | `name`                  | string |                              |                 | Required. Name of the Automation Account module.                                         |
 | `tags`                  | object | `{object}`                   |                 | Optional. Tags of the Automation Account resource.                                       |
-| `uri`                   | string |                              |                 | Required. Module package uri, e.g. https://www.powershellgallery.com/api/v2/package.     |
+| `uri`                   | string |                              |                 | Required. Module package uri, e.g. `https://www.powershellgallery.com/api/v2/package`.   |
 | `version`               | string | `latest`                     |                 | Optional. Module version or specify latest to get the latest version.                    |
 
 ## Outputs
