@@ -51,7 +51,7 @@
                 {
                     "name": "TestString",
                     "value": "\"TestString\"",
-                    "description": "TestStringDescription."
+                    "description": "TestStringDescription"
                 },
                 {
                     "name": "TestInteger",
