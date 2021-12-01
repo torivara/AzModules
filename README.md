@@ -66,11 +66,94 @@ The folder this is pointing to should be structured like the [`Modules`](https:/
 
 This process is currently being established.
 
+### ARM/Bicep WhatIf deployment
+
+When doing ARM/Bicep you can use [WhatIf deployments](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-what-if?tabs=azure-cli) to see which changes will be performed by you operation. This is also possible with our framework.
+
+This is an example of action usage in a workflow (Note the Action: 'WhatIf'):
+
+```yaml
+name: Solution-Patching-Classic
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  SolutionPath: <path to your solution>
+  Location: norwayeast
+  TenantID: ${{ secrets.TENANT_ID }}
+
+jobs:
+
+  DeployJob:
+    name: Deploy infrastructure
+    runs-on: ubuntu-latest
+    environment: <your environment name>
+    env:
+      Subscription: ${{ secrets.SUBSCRIPTION_ID }}
+      AppID: ${{ secrets.APP_ID }}
+      AppSecret: ${{ secrets.APP_SECRET }}
+    steps:
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Connect to Azure
+        uses: equinor/AzConnect@v1
+
+      - name: Gather environment information
+        uses: equinor/AzGather@v1
+
+      - name: List Variables
+        uses: equinor/AzVariables@v1
+        with:
+          List: true
+          Load: false
+
+      - name: What-If Deployment
+        id: DeployModule
+        uses: equinor/AzModules@v1
+        if: github.event_name == 'pull_request'
+        with:
+          ModuleName: <ModuleName>
+          ModuleVersion: <ModuleVersion>
+          Action: 'WhatIf'
+          ParameterFolderPath: <ParameterFolderPath>
+          ResourceGroupName: <ResourceGroupName>
+          ParameterOverrides: <ParameterOverride>
+
+       - name: Deployment
+        id: DeployModule
+        uses: equinor/AzModules@v1
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        with:
+          ModuleName: <ModuleName>
+          ModuleVersion: <ModuleVersion>
+          Action: 'Deploy'
+          ParameterFolderPath: <ParameterFolderPath>
+          ResourceGroupName: <ResourceGroupName>
+          ParameterOverrides: <ParameterOverride>
+```
+
+When a deployment with action `WhatIf` is processed, you will get an output message with the required changes to your infrastructure. You can then decide if this is should be deployed, or if you want to change the code for any reason.
+
+What-If will always run on a Pull Request to main branch.
+
+### PowerShell WhatIf
+
+An action value of `what-if` will be input as a parameter to the PowerShell script. PowerShell scripts to be deployed need to support this action value, and implement their own version of What-If.
+
 ## Inputs
 
 | Input name            | Default  | Required | Description                                                                                                            | Allowed values                                                                                                                        |
 | :-------------------- | :------- | :------- | :--------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `Action`              | `Deploy` | No       | The action to perform.                                                                                                 | Validate, Deploy, Remove                                                                                                              |
+| `Action`              | `Deploy` | No       | The action to perform.                                                                                                 | WhatIf, Validate, Deploy, Remove                                                                                                      |
 | `ResourceGroupName`   |          | No       | Target Resource Group to deploy resources to.                                                                          | string                                                                                                                                |
 | `Subscription`        |          | No       | Subscription ID or name to deploy resources to.                                                                        | string (GUID or name of subscription)                                                                                                 |
 | `ManagementGroupID`   |          | No       | Target Management Group to deploy resources to.                                                                        | string                                                                                                                                |
