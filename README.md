@@ -70,76 +70,7 @@ This process is currently being established.
 
 When doing ARM/Bicep you can use [WhatIf deployments](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-what-if?tabs=azure-cli) to see which changes will be performed by you operation. This is also possible with our framework.
 
-This is an example of action usage in a workflow (Note the Action: 'WhatIf'):
-
-```yaml
-name: Solution-Patching-Classic
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  SolutionPath: <path to your solution>
-  Location: norwayeast
-  TenantID: ${{ secrets.TENANT_ID }}
-
-jobs:
-
-  DeployJob:
-    name: Deploy infrastructure
-    runs-on: ubuntu-latest
-    environment: <your environment name>
-    env:
-      Subscription: ${{ secrets.SUBSCRIPTION_ID }}
-      AppID: ${{ secrets.APP_ID }}
-      AppSecret: ${{ secrets.APP_SECRET }}
-    steps:
-
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Connect to Azure
-        uses: equinor/AzConnect@v1
-
-      - name: Gather environment information
-        uses: equinor/AzGather@v1
-
-      - name: List Variables
-        uses: equinor/AzVariables@v1
-        with:
-          List: true
-          Load: false
-
-      - name: What-If Deployment
-        id: DeployModule
-        uses: equinor/AzModules@v1
-        if: github.event_name == 'pull_request'
-        with:
-          ModuleName: <ModuleName>
-          ModuleVersion: <ModuleVersion>
-          Action: 'WhatIf'
-          ParameterFolderPath: <ParameterFolderPath>
-          ResourceGroupName: <ResourceGroupName>
-          ParameterOverrides: <ParameterOverride>
-
-       - name: Deployment
-        id: DeployModule
-        uses: equinor/AzModules@v1
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        with:
-          ModuleName: <ModuleName>
-          ModuleVersion: <ModuleVersion>
-          Action: 'Deploy'
-          ParameterFolderPath: <ParameterFolderPath>
-          ResourceGroupName: <ResourceGroupName>
-          ParameterOverrides: <ParameterOverride>
-```
+See usage example below.
 
 When a deployment with action `WhatIf` is processed, you will get an output message with the required changes to your infrastructure. You can then decide if this is should be deployed, or if you want to change the code for any reason.
 
@@ -274,6 +205,43 @@ jobs:
           # ResourceGroupName can be passed from environment variables using ParametersOverrides.
           ParameterOverrides: resourceGroupName=${{ env.ResourceGroupName }}
 
+```
+
+### Using WhatIf
+
+You can use WhatIf deployment to check which changes will be deployed.
+
+```yml
+name: Test-Workflow
+
+on: [push]
+
+env:
+  TenantID: 0229e31e-273f-49bc-befe-eb255ae83dfc
+  AppID: a3825ed9-ca00-4355-9b3e-a37f12f9cf44
+  Subscription: Dev-Subscription-123
+  AppSecret: ${{ secrets.APP_SECRET }}
+  Location: norwayeast
+
+jobs:
+  Validate:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout parameter
+        uses: actions/checkout@v2
+
+      - name: Connect to Azure
+        uses: equinor/AzConnect@v1
+
+      - name: Deploy resource group
+        id: DeployRG
+        uses: equinor/AzModules@v1
+        with:
+          ModuleName: ResourceGroup
+          ModuleVersion: '1.0'
+          Action: 'WhatIf'
+          ParameterFilePath: Parameters/ResourceGroup/MyRg.json
 ```
 
 ### How to handle output
