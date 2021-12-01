@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "eq-validation-aa2"
+            "value": "eq-validation-aa"
         },
         "schedules": {
             "value": [
