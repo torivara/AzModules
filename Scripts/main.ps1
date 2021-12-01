@@ -250,20 +250,27 @@ foreach ($ParameterFile in $ParameterFiles) {
                 break
             }
 
-            Write-Output '    Showing DeploymentOutput:'
-            $DeploymentOutput | Select-Object -ExcludeProperty properties
-            Write-Output '    Showing DeploymentOutput.properties:'
-            $DeploymentOutput | Select-Object -ExpandProperty properties
-            Write-Output '    Showing DeploymentOutput.properties.parameters:'
-            $DeploymentOutput.properties | Select-Object -ExpandProperty parameters
+            if ('WhatIf' -eq $Action) {
+                Write-Output '    Showing WhatIfOutput:'
+                $DeploymentOutput
+                Write-Output "::set-output name=Output::$DeploymentOutput"
+            } else {
+                Write-Output '    Showing DeploymentOutput:'
+                $DeploymentOutput | Select-Object -ExcludeProperty properties
+                Write-Output '    Showing DeploymentOutput.properties:'
+                $DeploymentOutput | Select-Object -ExpandProperty properties
+                Write-Output '    Showing DeploymentOutput.properties.parameters:'
+                $DeploymentOutput.properties | Select-Object -ExpandProperty parameters
 
-            $DeploymentOutputObject = New-Object -TypeName PSCustomObject
-            foreach ($Output in $DeploymentOutput.properties.outputs.PSObject.Properties) {
-                $Name = $Output.Name
-                $Value = $Output.Value.Value
-                $DeploymentOutputObject | Add-Member -NotePropertyName $Name -NotePropertyValue $Value
+                $DeploymentOutputObject = New-Object -TypeName PSCustomObject
+                foreach ($Output in $DeploymentOutput.properties.outputs.PSObject.Properties) {
+                    $Name = $Output.Name
+                    $Value = $Output.Value.Value
+                    $DeploymentOutputObject | Add-Member -NotePropertyName $Name -NotePropertyValue $Value
+                }
+                $DeploymentOutputObjects += $DeploymentOutputObject
+                Write-Output "::set-output name=Output::$($DeploymentOutputObjects | ConvertTo-Json -Compress -Depth 100)"
             }
-            $DeploymentOutputObjects += $DeploymentOutputObject
 
         }
         '.yml' {
@@ -280,8 +287,6 @@ foreach ($ParameterFile in $ParameterFiles) {
 }
 
 Write-Output '::endgroup::'
-
-Write-Output "::set-output name=Output::$($DeploymentOutputObjects | ConvertTo-Json -Compress -Depth 100)"
 
 New-GitHubLogGroup -Title "$Task-$Action-$ModuleName-$ModuleVersion-Output"
 return $DeploymentOutputObjects
