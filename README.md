@@ -70,7 +70,7 @@ This process is currently being established.
 
 When doing ARM/Bicep you can use [WhatIf deployments](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-what-if?tabs=azure-cli) to see which changes will be performed by you operation. This is also possible with our framework.
 
-See usage example below.
+See usage example [here](#using-whatif).
 
 When a deployment with action `WhatIf` is processed, you will get an output message with the required changes to your infrastructure. You can then decide if this is should be deployed, or if you want to change the code for any reason.
 
