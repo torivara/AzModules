@@ -6,7 +6,7 @@ branding:
 
 inputs:
   Action:
-    description: 'The action to perform. WhatIf, Validate, Deploy, Remove. Default: Deploy'
+    description: 'The action to perform. Whatif, Validate, Deploy, Remove. Default: Deploy'
     required: false
     default: Deploy
   ResourceGroupName:

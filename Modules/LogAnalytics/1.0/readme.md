@@ -4,7 +4,7 @@ This template deploys Log Analytics.
 
 ## Resource types
 
-| ResourceType                                                         | API Version        |
+| Resource Type                                                        | API Version        |
 | :------------------------------------------------------------------- | :----------------- |
 | `Microsoft.Resources/deployments`                                    | 2018-02-01         |
 | `Microsoft.OperationalInsights/workspaces`                           | 2017-03-15-preview |

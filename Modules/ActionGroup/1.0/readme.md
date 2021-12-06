@@ -4,7 +4,7 @@ This module deploys an Action Group
 
 ## Resource Types
 
-| Resource Type                                               | Api Version        |
+| Resource Type                                               | API Version        |
 | :---------------------------------------------------------- | :----------------- |
 | `Microsoft.Resources/deployments`                           | 2018-02-01         |
 | `microsoft.insights/actionGroups`                           | 2019-06-01         |

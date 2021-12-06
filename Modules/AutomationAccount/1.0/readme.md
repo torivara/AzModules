@@ -4,7 +4,7 @@ This module deploys an Azure Automation Account, with resource lock.
 
 ## Resource Types
 
-| Resource Type                                                          | Api Version        |
+| Resource Type                                                          | API Version        |
 | :--------------------------------------------------------------------- | :----------------- |
 | `Microsoft.Automation/automationAccounts`                              | 2015-10-31         |
 | `Microsoft.Automation/automationAccounts/runbooks`                     | 2018-06-30         |
@@ -157,7 +157,7 @@ List of jobSchedules to be created in the automation account
 "jobSchedules": {
     "value": [
         {
-            "jobScheduleName": "ScalingRunbook_JobSchedule", // jobSchedule used to generate unique id
+            "jobScheduleName": "ScalingRunbook_JobSchedule", // jobSchedule used to generate unique ID
             "scheduleName": "ScalingRunbook_Schedule", // Gets or sets the schedule
             "runbookName": "ScalingRunbook", // Gets or sets the runbook
             "parameters": { // Gets or sets a list of job properties.
@@ -333,7 +333,7 @@ User Assigned:
     "value": {
         "type": "UserAssigned",
         "userAssignedIdentities": {
-            "<managed identity 1 resource id>"
+            "<managed identity 1 resource ID>"
         }
     }
 }

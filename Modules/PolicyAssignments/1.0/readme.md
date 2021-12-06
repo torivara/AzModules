@@ -2,10 +2,10 @@
 
 ## Resource types
 
-| Resource Type                               | ApiVersion |
-| :------------------------------------------ | :--------- |
-| `Microsoft.Resources/deployments`           | 2018-02-01 |
-| `Microsoft.Authorization/policyAssignments` | 2018-05-01 |
+| Resource Type                               | API Version |
+| :------------------------------------------ | :---------- |
+| `Microsoft.Resources/deployments`           | 2018-02-01  |
+| `Microsoft.Authorization/policyAssignments` | 2018-05-01  |
 
 ## Parameters
 

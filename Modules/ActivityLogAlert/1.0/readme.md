@@ -4,7 +4,7 @@ This module deploys an Alert based on Activity Log
 
 ## Resource Types
 
-| Resource Type                                                    | Api Version        |
+| Resource Type                                                    | API Version        |
 | :--------------------------------------------------------------- | :----------------- |
 | `Microsoft.Resources/deployments`                                | 2018-02-01         |
 | `Microsoft.Insights/ActivityLogAlerts`                           | 2017-04-01         |
@@ -23,6 +23,7 @@ This module deploys an Alert based on Activity Log
 | `location`         | string | Optional. Location for all resources.                                                                                                                                                                                                                                                                                                                                                                          | global                |                 |
 | `roleAssignments`  | array  | Optional. Array of role assignment objects that contain the 'roleDefinitionIdOrName' and 'principalId' to define RBAC role assignments on this resource. In the roleDefinitionIdOrName attribute, you can provide either the display name of the role definition, or its fully qualified ID in the following format: '/providers/Microsoft.Authorization/roleDefinitions/c2f4ef07-c644-48eb-af81-4b1b4947fb11' | System.Object[]       |                 |
 | `scopes`           | array  | Optional. the list of resource IDs that this alert is scoped to.                                                                                                                                                                                                                                                                                                                                               | \[subscription().id\] |                 |
+| `scopes`           | array  | Optional. the list of resource IDs that this alert is scoped to.                                                                                                                                                                                                                                                                                                                                               | \[subscription().ID\] |                 |
 | `tags`             | object | Optional. Tags of the resource.                                                                                                                                                                                                                                                                                                                                                                                |                       |                 |
 
 ### Parameter Usage: actions
